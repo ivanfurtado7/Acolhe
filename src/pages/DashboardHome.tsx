@@ -179,7 +179,7 @@ export function DashboardHome({
     <div className="animate-in fade-in slide-in-from-bottom-4 pb-10 relative">
       
       {/* HEADER DE NOTIFICAÇÕES (SINO FLUTUANTE) */}
-      <div className="absolute -top-12 right-0 z-50 flex justify-end">
+      <div className="flex justify-end mb-4 md:absolute md:-top-16 md:right-0 md:mb-0 z-50">
         <div className="relative">
           <button 
             onClick={() => setShowNotifications(!showNotifications)} 
