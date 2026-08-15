@@ -13,7 +13,7 @@ import { EscalasView } from './pages/EscalasView'
 import { ProfileManagement } from './pages/ProfileManagement'
 
 import { 
-  Home, Users, HeartHandshake, QrCode, User, LogOut, Settings, Megaphone, CalendarCheck, X, Bell
+  Home, Users, HeartHandshake, QrCode, User, LogOut, Settings, AlertCircle, Megaphone, CalendarCheck, X, Bell
 } from 'lucide-react'
 import logoAcolhe from './assets/logo-acolhe.png'
 
@@ -221,8 +221,8 @@ export function App() {
       {/* NAVBAR MOBILE COM CORREÇÃO DE DUPLICAÇÃO */}
       <nav className="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-stone-200 flex items-center justify-around h-16 z-40 px-2 pb-safe shadow-[0_-4px_24px_rgba(0,0,0,0.05)] print:hidden">
         {navItems
-          .filter(item => item.id !== 'profile') // Garante que "Meu Perfil" original não entre aqui
-          .slice(0, 4) // Mostra no máximo as 4 primeiras funcionalidades
+          .filter(item => item.id !== 'profile')
+          .slice(0, 4)
           .map(item => (
           <button
             key={item.id}
@@ -259,49 +259,49 @@ export function App() {
             )}
           </div>
           
-          <div className="flex items-center gap-2.5 shrink-0">
+          {/* GRUPO DE BOTÕES À DIREITA COM POSIÇÃO RELATIVA */}
+          <div className="flex items-center gap-2.5 shrink-0 relative">
             
-            {/* SINO DE NOTIFICAÇÕES */}
-            <div className="relative">
-              <button 
-                onClick={() => setShowNotifications(!showNotifications)} 
-                className="p-2.5 bg-stone-50 hover:bg-stone-100 border border-stone-200 shadow-sm rounded-full text-stone-600 transition-colors relative cursor-pointer flex items-center justify-center"
-                title="Notificações"
-              >
-                <Bell size={18} />
-                {notifications.length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center border border-white animate-pulse">
-                    {notifications.length}
-                  </span>
-                )}
-              </button>
-
-              {showNotifications && (
-                <div className="absolute top-12 right-0 w-80 bg-white border border-stone-200 rounded-3xl shadow-xl overflow-hidden z-50 animate-in fade-in slide-in-from-top-2">
-                  <div className="p-4 border-b border-stone-100 bg-stone-50 flex justify-between items-center">
-                    <h4 className="font-bold text-stone-800 text-xs">Notificações</h4>
-                    <span className="text-[10px] font-bold text-stone-500 bg-stone-200 px-2 py-0.5 rounded-full">{notifications.length}</span>
-                  </div>
-                  <div className="max-h-[350px] overflow-y-auto p-2">
-                    {notifications.length === 0 ? (
-                      <p className="text-xs text-stone-400 text-center py-6">Nenhuma notificação no momento.</p>
-                    ) : (
-                      notifications.map(n => (
-                        <div key={n.id} onClick={() => {
-                          if (n.type === 'escala') setCurrentTab('escalas');
-                          if (n.type === 'grupo') setCurrentTab('grupos');
-                          if (n.type === 'admin') setCurrentTab('settings');
-                          setShowNotifications(false);
-                        }} className="p-3 hover:bg-stone-50 rounded-2xl cursor-pointer transition-colors border border-transparent hover:border-stone-100">
-                          <p className="text-xs font-bold text-amber-800">{n.title}</p>
-                          <p className="text-[11px] text-stone-600 mt-0.5">{n.description}</p>
-                        </div>
-                      ))
-                    )}
-                  </div>
-                </div>
+            {/* SINO DE NOTIFICAÇÕES (AGORA COM A CORREÇÃO DE ALINHAMENTO) */}
+            <button 
+              onClick={() => setShowNotifications(!showNotifications)} 
+              className="p-2.5 bg-stone-50 hover:bg-stone-100 border border-stone-200 shadow-sm rounded-full text-stone-600 transition-colors relative cursor-pointer flex items-center justify-center"
+              title="Notificações"
+            >
+              <Bell size={18} />
+              {notifications.length > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center border border-white animate-pulse">
+                  {notifications.length}
+                </span>
               )}
-            </div>
+            </button>
+
+            {/* PAINEL DE NOTIFICAÇÕES */}
+            {showNotifications && (
+              <div className="absolute top-[115%] right-0 w-[85vw] sm:w-80 max-w-[320px] bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden z-50 animate-in fade-in zoom-in-95 origin-top-right">
+                <div className="p-4 border-b border-stone-100 bg-stone-50 flex justify-between items-center">
+                  <h4 className="font-bold text-stone-800 text-xs uppercase tracking-wider">Notificações</h4>
+                  <span className="text-[10px] font-bold text-stone-500 bg-stone-200 px-2 py-0.5 rounded-full">{notifications.length}</span>
+                </div>
+                <div className="max-h-[350px] overflow-y-auto p-2">
+                  {notifications.length === 0 ? (
+                    <p className="text-xs text-stone-400 text-center py-6">Nenhuma notificação no momento.</p>
+                  ) : (
+                    notifications.map(n => (
+                      <div key={n.id} onClick={() => {
+                        if (n.type === 'escala') setCurrentTab('escalas');
+                        if (n.type === 'grupo') setCurrentTab('grupos');
+                        if (n.type === 'admin') setCurrentTab('settings');
+                        setShowNotifications(false);
+                      }} className="p-3 hover:bg-stone-50 rounded-2xl cursor-pointer transition-colors border border-transparent hover:border-stone-100">
+                        <p className="text-xs font-bold text-amber-800">{n.title}</p>
+                        <p className="text-[11px] text-stone-600 mt-0.5">{n.description}</p>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            )}
 
             {/* BOTÃO DO MENU TIPO APPLE (NOME) */}
             <button 
