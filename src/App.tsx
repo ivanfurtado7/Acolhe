@@ -13,7 +13,7 @@ import { EscalasView } from './pages/EscalasView'
 import { ProfileManagement } from './pages/ProfileManagement'
 
 import { 
-  Home, Users, HeartHandshake, QrCode, User, LogOut, Settings, AlertCircle, Megaphone, CalendarCheck, X, Bell
+  Home, Users, HeartHandshake, QrCode, User, LogOut, Settings, Megaphone, CalendarCheck, X, Bell
 } from 'lucide-react'
 import logoAcolhe from './assets/logo-acolhe.png'
 
@@ -218,9 +218,12 @@ export function App() {
         </div>
       </aside>
 
-      {/* NAVBAR MOBILE */}
+      {/* NAVBAR MOBILE COM CORREÇÃO DE DUPLICAÇÃO */}
       <nav className="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-stone-200 flex items-center justify-around h-16 z-40 px-2 pb-safe shadow-[0_-4px_24px_rgba(0,0,0,0.05)] print:hidden">
-        {navItems.slice(0, 4).map(item => (
+        {navItems
+          .filter(item => item.id !== 'profile') // Garante que "Meu Perfil" original não entre aqui
+          .slice(0, 4) // Mostra no máximo as 4 primeiras funcionalidades
+          .map(item => (
           <button
             key={item.id}
             onClick={() => setCurrentTab(item.id as any)}
@@ -230,6 +233,8 @@ export function App() {
             <span className={`text-[9px] font-bold ${currentTab === item.id ? 'opacity-100' : 'opacity-70'}`}>{item.label}</span>
           </button>
         ))}
+        
+        {/* BOTÃO PERFIL FIXO NO FINAL */}
         <button onClick={() => setCurrentTab('profile')} className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${currentTab === 'profile' ? 'text-amber-700' : 'text-stone-400 hover:text-stone-700'}`}>
           <User size={20} strokeWidth={currentTab === 'profile' ? 2.5 : 2} />
           <span className={`text-[9px] font-bold ${currentTab === 'profile' ? 'opacity-100' : 'opacity-70'}`}>Perfil</span>
@@ -239,7 +244,7 @@ export function App() {
       {/* ÁREA DE CONTEÚDO PRINCIPAL */}
       <div className="flex-1 md:ml-[72px] flex flex-col min-h-screen w-full">
         
-        {/* CABEÇALHO COM O SINO INTEGRADO AO LADO DO NOME */}
+        {/* CABEÇALHO */}
         <header className="bg-white/80 backdrop-blur-xl border-b border-stone-200 px-4 md:px-8 min-h-[64px] md:min-h-[72px] py-3 flex justify-between items-center sticky top-0 z-30 print:hidden w-full">
           <div className="flex-1 min-w-0 pr-4">
             {currentTab === 'inicio' ? (
